@@ -7,7 +7,6 @@ Automated pipeline to analyze 100 SaaS apps across 10 categories for agent-calla
 import json
 import os
 import sys
-from typing import List, Dict, Any
 
 RAW_APPS_DATA = [
     # 1. CRM and Sales
@@ -19,11 +18,12 @@ RAW_APPS_DATA = [
         "description": "Enterprise cloud CRM and revenue management platform.",
         "auth_methods": ["OAuth2", "API Key"],
         "access_tier": "Self-Serve Trial",
-        "api_surface": "REST & GraphQL (REST, SOAP, Bulk API 2.0)",
+        "api_surface": "REST & GraphQL",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires Connected App setup & org admin permissions",
+        "confidence_score": 94,
         "evidence_url": "https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/"
     },
     {
@@ -39,6 +39,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developers.hubspot.com/docs/api/overview"
     },
     {
@@ -54,6 +55,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developers.pipedrive.com/docs/api/v1"
     },
     {
@@ -69,6 +71,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developers.attio.com/reference"
     },
     {
@@ -84,6 +87,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.twenty.com/"
     },
     {
@@ -99,6 +103,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://developers.podio.com/"
     },
     {
@@ -109,11 +114,12 @@ RAW_APPS_DATA = [
         "description": "Global enterprise CRM for multichannel customer engagement.",
         "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (v2/v3/v6 API)",
+        "api_surface": "REST (v6 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Multi-region domain routing & OAuth scope complexity",
+        "confidence_score": 92,
         "evidence_url": "https://www.zoho.com/crm/developer/docs/api/v6/"
     },
     {
@@ -129,6 +135,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developer.close.com/"
     },
     {
@@ -137,13 +144,14 @@ RAW_APPS_DATA = [
         "website": "copper.com",
         "category": "CRM and Sales",
         "description": "Google Workspace-native CRM for lead and pipeline tracking.",
-        "auth_methods": ["API Key", "Header Auth (Email+Token)"],
+        "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST (v1 API)",
         "api_breadth": "Moderate",
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 92,
         "evidence_url": "https://developer.copper.com/"
     },
     {
@@ -154,11 +162,12 @@ RAW_APPS_DATA = [
         "description": "Capital markets CRM and deal management suite by Intapp.",
         "auth_methods": ["OAuth2"],
         "access_tier": "Partner Only / Contact Sales",
-        "api_surface": "REST (Data Exchange API)",
+        "api_surface": "REST",
         "api_breadth": "Moderate",
         "mcp_status": "No MCP / Blocked",
         "buildability_verdict": "Blocked by Auth/Gating",
         "main_blocker": "Partner-Gated / Enterprise Client License Required",
+        "confidence_score": 88,
         "evidence_url": "https://api.docs.dealcloud.com/"
     },
 
@@ -169,13 +178,14 @@ RAW_APPS_DATA = [
         "website": "zendesk.com",
         "category": "Support and Helpdesk",
         "description": "Omnichannel customer support, ticketing, and knowledge base software.",
-        "auth_methods": ["OAuth2", "API Key", "Basic"],
+        "auth_methods": ["OAuth2", "API Key"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST (v2 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developer.zendesk.com/api-reference/"
     },
     {
@@ -191,6 +201,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developers.intercom.com/reference"
     },
     {
@@ -206,6 +217,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developers.freshdesk.com/api/"
     },
     {
@@ -221,6 +233,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://dev.frontapp.com/reference/overview"
     },
     {
@@ -236,6 +249,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "Requires active paid workspace",
+        "confidence_score": 92,
         "evidence_url": "https://docs.usepylon.com/reference/introduction"
     },
     {
@@ -251,6 +265,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://api.postaffiliatepro.com/docs/v3/"
     },
     {
@@ -266,6 +281,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://www.plain.com/docs"
     },
     {
@@ -281,6 +297,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developer.helpscout.com/mailbox-api/"
     },
     {
@@ -289,13 +306,14 @@ RAW_APPS_DATA = [
         "website": "gorgias.com",
         "category": "Support and Helpdesk",
         "description": "Ecommerce-focused helpdesk integrated with Shopify and Magento.",
-        "auth_methods": ["API Key", "OAuth2", "Basic"],
+        "auth_methods": ["API Key", "OAuth2"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://developers.gorgias.com/reference/getting-started"
     },
     {
@@ -304,13 +322,14 @@ RAW_APPS_DATA = [
         "website": "gladly.com",
         "category": "Support and Helpdesk",
         "description": "People-centered customer service platform for enterprise brands.",
-        "auth_methods": ["API Key", "Basic"],
+        "auth_methods": ["API Key"],
         "access_tier": "Partner Only / Contact Sales",
         "api_surface": "REST",
         "api_breadth": "Moderate",
         "mcp_status": "No MCP / Blocked",
         "buildability_verdict": "Blocked by Auth/Gating",
         "main_blocker": "Partner-Gated / Enterprise Account Required",
+        "confidence_score": 90,
         "evidence_url": "https://developer.gladly.com/"
     },
 
@@ -323,11 +342,12 @@ RAW_APPS_DATA = [
         "description": "Enterprise messaging and workflow automation platform.",
         "auth_methods": ["OAuth2", "Bearer Token"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST & WebSockets (Web API, Events API)",
+        "api_surface": "REST & WebSockets",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://api.slack.com/"
     },
     {
@@ -343,6 +363,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://www.twilio.com/docs/usage/api"
     },
     {
@@ -358,6 +379,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://www.zoho.com/cliq/help/rest-apis/"
     },
     {
@@ -366,13 +388,14 @@ RAW_APPS_DATA = [
         "website": "open.larksuite.com",
         "category": "Communications and Messaging",
         "description": "All-in-one collaboration suite combining chat, docs, and calendar by ByteDance.",
-        "auth_methods": ["OAuth2", "Bearer Token"],
+        "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://open.larksuite.com/document/home/index"
     },
     {
@@ -388,6 +411,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 92,
         "evidence_url": "https://pumble.com/help/api-and-integrations/"
     },
     {
@@ -398,11 +422,12 @@ RAW_APPS_DATA = [
         "description": "Voice, video, and text communication platform for communities and bots.",
         "auth_methods": ["OAuth2", "Bot Token"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST & WebSockets (v10 API)",
+        "api_surface": "REST & WebSockets",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://discord.com/developers/docs/intro"
     },
     {
@@ -411,13 +436,14 @@ RAW_APPS_DATA = [
         "website": "core.telegram.org",
         "category": "Communications and Messaging",
         "description": "Cloud-based mobile and desktop messaging app with extensive bot APIs.",
-        "auth_methods": ["Bot Token", "API Key (MTProto)"],
+        "auth_methods": ["Bot Token"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (Bot API) & MTProto",
+        "api_surface": "REST (Bot API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://core.telegram.org/bots/api"
     },
     {
@@ -428,11 +454,12 @@ RAW_APPS_DATA = [
         "description": "Meta platform API for messaging customers on WhatsApp.",
         "auth_methods": ["OAuth2", "Bearer Token"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (Meta Graph API)",
+        "api_surface": "REST (Graph API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Meta Developer App verification & phone number approval",
+        "confidence_score": 94,
         "evidence_url": "https://developers.facebook.com/docs/whatsapp/cloud-api"
     },
     {
@@ -441,13 +468,14 @@ RAW_APPS_DATA = [
         "website": "aircall.io",
         "category": "Communications and Messaging",
         "description": "Cloud call center and phone system for sales and support teams.",
-        "auth_methods": ["API Key", "OAuth2", "Basic"],
+        "auth_methods": ["API Key", "OAuth2"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST (v1 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://developer.aircall.io/"
     },
     {
@@ -463,6 +491,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developer.vonage.com/en/api"
     },
 
@@ -475,11 +504,12 @@ RAW_APPS_DATA = [
         "description": "Online advertising platform for managing Google ad campaigns.",
         "auth_methods": ["OAuth2", "Developer Token"],
         "access_tier": "Admin / Approval Gated",
-        "api_surface": "gRPC & REST (v17/v18 API)",
+        "api_surface": "gRPC & REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires Google Developer Token approval process",
+        "confidence_score": 92,
         "evidence_url": "https://developers.google.com/google-ads/api/docs/first-call/overview"
     },
     {
@@ -488,13 +518,14 @@ RAW_APPS_DATA = [
         "website": "developers.facebook.com/docs/marketing-apis",
         "category": "Marketing, Ads, Email and Social",
         "description": "Advertising management suite across Facebook, Instagram, and Audience Network.",
-        "auth_methods": ["OAuth2", "Bearer Token"],
+        "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (Graph API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "App Review required for advanced Marketing API permissions",
+        "confidence_score": 94,
         "evidence_url": "https://developers.facebook.com/docs/marketing-apis"
     },
     {
@@ -510,6 +541,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires Marketing Developer Platform access grant",
+        "confidence_score": 92,
         "evidence_url": "https://learn.microsoft.com/en-us/linkedin/marketing/"
     },
     {
@@ -525,6 +557,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://highlevel.stoplight.io/docs/integrations/"
     },
     {
@@ -540,6 +573,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://mailchimp.com/developer/marketing/api/"
     },
     {
@@ -555,6 +589,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developers.klaviyo.com/en/reference/api_overview"
     },
     {
@@ -570,6 +605,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 90,
         "evidence_url": "https://systeme.io/help/how-to-use-systeme-io-api"
     },
     {
@@ -585,6 +621,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developers.pinterest.com/docs/api/v5/"
     },
     {
@@ -593,13 +630,14 @@ RAW_APPS_DATA = [
         "website": "developers.facebook.com/docs/threads",
         "category": "Marketing, Ads, Email and Social",
         "description": "Meta text-based social conversation network API.",
-        "auth_methods": ["OAuth2", "Bearer Token"],
+        "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (Threads API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developers.facebook.com/docs/threads/"
     },
     {
@@ -615,6 +653,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.sendgrid.com/api-reference"
     },
 
@@ -625,28 +664,30 @@ RAW_APPS_DATA = [
         "website": "shopify.dev",
         "category": "Ecommerce",
         "description": "Leading global commerce OS for store management and checkout.",
-        "auth_methods": ["OAuth2", "Access Token"],
+        "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "GraphQL & REST (Admin/Storefront API)",
+        "api_surface": "GraphQL & REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://shopify.dev/docs/api/admin-graphql"
     },
     {
         "id": 42,
         "name": "WooCommerce",
-        "website": "woocommerce.com/document/woocommerce-rest-api",
+        "website": "woocommerce.com",
         "category": "Ecommerce",
         "description": "Open-source ecommerce plugin built on WordPress.",
-        "auth_methods": ["API Key", "Basic", "OAuth1.0a"],
+        "auth_methods": ["API Key", "Basic"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v3 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://woocommerce.github.io/woocommerce-rest-api-docs/"
     },
     {
@@ -655,13 +696,14 @@ RAW_APPS_DATA = [
         "website": "developer.bigcommerce.com",
         "category": "Ecommerce",
         "description": "Open-SaaS enterprise ecommerce platform for B2C and B2B brands.",
-        "auth_methods": ["OAuth2", "API Key"],
+        "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST & GraphQL (v3 API)",
+        "api_surface": "REST & GraphQL",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developer.bigcommerce.com/docs/start/api-basics"
     },
     {
@@ -672,11 +714,12 @@ RAW_APPS_DATA = [
         "description": "Enterprise B2C and B2B digital commerce suite.",
         "auth_methods": ["OAuth2", "JWT"],
         "access_tier": "Partner Only / Contact Sales",
-        "api_surface": "REST (B2C Commerce Headless SCAPI)",
+        "api_surface": "REST (SCAPI)",
         "api_breadth": "Comprehensive",
         "mcp_status": "No MCP / Blocked",
         "buildability_verdict": "Blocked by Auth/Gating",
         "main_blocker": "Partner-Gated / Salesforce B2C License required",
+        "confidence_score": 88,
         "evidence_url": "https://developer.salesforce.com/docs/commerce/commerce-api/overview"
     },
     {
@@ -685,13 +728,14 @@ RAW_APPS_DATA = [
         "website": "developer.adobe.com/commerce",
         "category": "Ecommerce",
         "description": "Flexible open-source and enterprise digital commerce platform.",
-        "auth_methods": ["OAuth2", "Bearer Token", "Basic"],
+        "auth_methods": ["OAuth2", "Bearer Token"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST & GraphQL",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developer.adobe.com/commerce/webapi/get-started/"
     },
     {
@@ -707,6 +751,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://developers.squarespace.com/commerce-api/overview"
     },
     {
@@ -715,13 +760,14 @@ RAW_APPS_DATA = [
         "website": "api-docs.ecwid.com",
         "category": "Ecommerce",
         "description": "Lightweight embeddable ecommerce shopping cart widget by Lightspeed.",
-        "auth_methods": ["OAuth2", "Bearer Token"],
+        "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v3 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://api-docs.ecwid.com/reference/overview"
     },
     {
@@ -737,6 +783,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://gumroad.com/api"
     },
     {
@@ -745,13 +792,14 @@ RAW_APPS_DATA = [
         "website": "developer-docs.amazon.com/sp-api",
         "category": "Ecommerce",
         "description": "Amazon REST-based API for merchants to manage orders, inventory, and fulfillment.",
-        "auth_methods": ["OAuth2", "AWS IAM SignV4"],
+        "auth_methods": ["OAuth2", "AWS IAM"],
         "access_tier": "Admin / Approval Gated",
         "api_surface": "REST (SP-API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires Amazon Professional Selling Account & App Approval",
+        "confidence_score": 92,
         "evidence_url": "https://developer-docs.amazon.com/sp-api/docs"
     },
     {
@@ -760,13 +808,14 @@ RAW_APPS_DATA = [
         "website": "fanbasis.com",
         "category": "Ecommerce",
         "description": "Monetization suite for creators for 1-on-1 experiences and custom digital products.",
-        "auth_methods": ["None / Cookie Auth"],
+        "auth_methods": ["None"],
         "access_tier": "No Public API",
         "api_surface": "None/Scrape",
         "api_breadth": "None",
         "mcp_status": "No MCP / Blocked",
         "buildability_verdict": "Blocked by No API",
         "main_blocker": "No Public Developer API (Web Scraping / Browser-Use Required)",
+        "confidence_score": 86,
         "evidence_url": "https://fanbasis.com/"
     },
 
@@ -784,6 +833,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.dataforseo.com/"
     },
     {
@@ -799,6 +849,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "Requires paid API subscription plan",
+        "confidence_score": 94,
         "evidence_url": "https://seranking.com/api.html"
     },
     {
@@ -814,6 +865,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "Requires Enterprise/API plan units",
+        "confidence_score": 96,
         "evidence_url": "https://ahrefs.com/api/documentation"
     },
     {
@@ -829,6 +881,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 92,
         "evidence_url": "https://docs.mrscraper.com/"
     },
     {
@@ -844,6 +897,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://docs.apify.com/api/v2"
     },
     {
@@ -854,11 +908,12 @@ RAW_APPS_DATA = [
         "description": "Turn web pages into clean Markdown or structured JSON for LLM applications.",
         "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST & Python/Node SDKs",
+        "api_surface": "REST & Python SDK",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://docs.firecrawl.dev/api-reference/introduction"
     },
     {
@@ -867,13 +922,14 @@ RAW_APPS_DATA = [
         "website": "brightdata.com",
         "category": "Data, SEO and Scraping",
         "description": "Proxy networks, web scraping infrastructure, and structured web datasets.",
-        "auth_methods": ["API Key", "Bearer Token"],
+        "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://docs.brightdata.com/api-reference/overview"
     },
     {
@@ -888,7 +944,8 @@ RAW_APPS_DATA = [
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
-        "main_blocker": "Local Python execution required (No Cloud API Hosted Service)",
+        "main_blocker": "Local Python execution required",
+        "confidence_score": 94,
         "evidence_url": "https://github.com/sherlock-project/sherlock"
     },
     {
@@ -904,6 +961,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 90,
         "evidence_url": "https://docs.waterfall.io/"
     },
     {
@@ -914,11 +972,12 @@ RAW_APPS_DATA = [
         "description": "GTM data enrichment and AI automated outbound engine.",
         "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (Webhooks & Table API)",
+        "api_surface": "REST",
         "api_breadth": "Moderate",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://api-docs.clay.com/"
     },
 
@@ -929,13 +988,14 @@ RAW_APPS_DATA = [
         "website": "docs.github.com/rest",
         "category": "Developer, Infra and Data platforms",
         "description": "World's largest software development and version control platform.",
-        "auth_methods": ["OAuth2", "Personal Access Token", "GitHub App"],
+        "auth_methods": ["OAuth2", "Personal Token"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST & GraphQL",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://docs.github.com/en/rest"
     },
     {
@@ -951,6 +1011,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://vercel.com/docs/rest-api"
     },
     {
@@ -966,6 +1027,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://open-api.netlify.com/"
     },
     {
@@ -981,6 +1043,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://developers.cloudflare.com/api/"
     },
     {
@@ -989,13 +1052,14 @@ RAW_APPS_DATA = [
         "website": "supabase.com/docs",
         "category": "Developer, Infra and Data platforms",
         "description": "Open-source Firebase alternative featuring Postgres, Auth, and Edge Functions.",
-        "auth_methods": ["API Key", "OAuth2", "JWT"],
+        "auth_methods": ["API Key", "OAuth2"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (PostgREST) & GraphQL",
+        "api_surface": "REST & GraphQL",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://supabase.com/docs/reference/api/introduction"
     },
     {
@@ -1006,11 +1070,12 @@ RAW_APPS_DATA = [
         "description": "Graph database engine for connected data analytics and vector search.",
         "auth_methods": ["Basic", "Bearer Token"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (HTTP Cypher API) & Bolt Protocol",
+        "api_surface": "REST & Bolt Protocol",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://neo4j.com/docs/http-api/current/"
     },
     {
@@ -1019,13 +1084,14 @@ RAW_APPS_DATA = [
         "website": "docs.snowflake.com",
         "category": "Developer, Infra and Data platforms",
         "description": "Cloud data warehousing and enterprise data sharing platform.",
-        "auth_methods": ["OAuth2", "Key Pair Auth"],
+        "auth_methods": ["OAuth2", "Key Pair"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST (SQL API v2)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://docs.snowflake.com/en/developer-guide/sql-api/index"
     },
     {
@@ -1036,11 +1102,12 @@ RAW_APPS_DATA = [
         "description": "Managed cloud document database service.",
         "auth_methods": ["Digest Auth", "API Key"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (Admin API & Data API)",
+        "api_surface": "REST (Data API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://www.mongodb.com/docs/atlas/app-services/data-api/"
     },
     {
@@ -1049,13 +1116,14 @@ RAW_APPS_DATA = [
         "website": "docs.datadoghq.com/api",
         "category": "Developer, Infra and Data platforms",
         "description": "Observability and analytics platform for cloud-scale applications.",
-        "auth_methods": ["API Key", "Application Key"],
+        "auth_methods": ["API Key", "App Key"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST (v1 & v2 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.datadoghq.com/api/latest/"
     },
     {
@@ -1071,6 +1139,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.sentry.io/api/"
     },
 
@@ -1088,6 +1157,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://developers.notion.com/reference/intro"
     },
     {
@@ -1096,13 +1166,14 @@ RAW_APPS_DATA = [
         "website": "airtable.com/developers",
         "category": "Productivity and Project Management",
         "description": "Low-code platform for building collaborative relational databases.",
-        "auth_methods": ["OAuth2", "Personal Access Token"],
+        "auth_methods": ["OAuth2", "Personal Token"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v0 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://airtable.com/developers/web/api/introduction"
     },
     {
@@ -1118,6 +1189,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://developers.linear.app/docs/graphql/working-with-the-graphql-api"
     },
     {
@@ -1126,13 +1198,14 @@ RAW_APPS_DATA = [
         "website": "developer.atlassian.com",
         "category": "Productivity and Project Management",
         "description": "Agile project management and issue tracking tool by Atlassian.",
-        "auth_methods": ["OAuth2", "Basic", "API Key"],
+        "auth_methods": ["OAuth2", "Basic"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (v2/v3 API)",
+        "api_surface": "REST (v3 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/"
     },
     {
@@ -1141,13 +1214,14 @@ RAW_APPS_DATA = [
         "website": "developers.asana.com",
         "category": "Productivity and Project Management",
         "description": "Work management and team project organization platform.",
-        "auth_methods": ["OAuth2", "Personal Access Token"],
+        "auth_methods": ["OAuth2", "Personal Token"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v1 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developers.asana.com/reference/rest-api-reference"
     },
     {
@@ -1163,6 +1237,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://developer.monday.com/api-reference/docs"
     },
     {
@@ -1171,13 +1246,14 @@ RAW_APPS_DATA = [
         "website": "clickup.com/api",
         "category": "Productivity and Project Management",
         "description": "All-in-one productivity suite for tasks, docs, and goal tracking.",
-        "auth_methods": ["OAuth2", "Personal Access Token"],
+        "auth_methods": ["OAuth2", "Personal Token"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v2 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://clickup.com/api"
     },
     {
@@ -1193,6 +1269,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://coda.io/developers/apis/v1"
     },
     {
@@ -1200,7 +1277,7 @@ RAW_APPS_DATA = [
         "name": "Smartsheet",
         "website": "smartsheet.com/developers",
         "category": "Productivity and Project Management",
-        "description": "Enterprise spreadsheet-like project management and collaboration platform.",
+        "description": "Enterprise spreadsheet-like project management platform.",
         "auth_methods": ["OAuth2", "Bearer Token"],
         "access_tier": "Self-Serve Trial",
         "api_surface": "REST (v2.0 API)",
@@ -1208,6 +1285,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://smartsheet.redoc.ly/"
     },
     {
@@ -1216,13 +1294,14 @@ RAW_APPS_DATA = [
         "website": "harvestapp.com",
         "category": "Productivity and Project Management",
         "description": "Time tracking, invoicing, and project profitability software.",
-        "auth_methods": ["OAuth2", "Personal Access Token"],
+        "auth_methods": ["OAuth2", "Personal Token"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v2 API)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://help.getharvest.com/api-v2/"
     },
 
@@ -1233,13 +1312,14 @@ RAW_APPS_DATA = [
         "website": "stripe.com/docs/api",
         "category": "Finance and Fintech",
         "description": "Financial infrastructure platform for payment processing and billing.",
-        "auth_methods": ["API Key", "OAuth2", "Bearer Token"],
+        "auth_methods": ["API Key", "OAuth2"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 99,
         "evidence_url": "https://stripe.com/docs/api"
     },
     {
@@ -1248,13 +1328,14 @@ RAW_APPS_DATA = [
         "website": "plaid.com/docs",
         "category": "Finance and Fintech",
         "description": "Data network connecting user bank accounts to fintech applications.",
-        "auth_methods": ["API Key", "Header Auth (Client-ID + Secret)"],
+        "auth_methods": ["API Key", "Header Auth"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires Production Access review for live bank connection",
+        "confidence_score": 94,
         "evidence_url": "https://plaid.com/docs/api/"
     },
     {
@@ -1263,13 +1344,14 @@ RAW_APPS_DATA = [
         "website": "binance-docs.github.io",
         "category": "Finance and Fintech",
         "description": "Global cryptocurrency exchange market data and trading engine.",
-        "auth_methods": ["API Key", "HMAC SHA256 Signature"],
+        "auth_methods": ["API Key", "HMAC SHA256"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST & WebSockets",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://binance-docs.github.io/apidocs/spot/en/"
     },
     {
@@ -1285,6 +1367,7 @@ RAW_APPS_DATA = [
         "mcp_status": "No MCP / Blocked",
         "buildability_verdict": "Blocked by Auth/Gating",
         "main_blocker": "Merchant Account Agreement Required (Japan region lock)",
+        "confidence_score": 86,
         "evidence_url": "https://www.paygent.co.jp/developer/"
     },
     {
@@ -1293,13 +1376,14 @@ RAW_APPS_DATA = [
         "website": "ipayx.ai/docs",
         "category": "Finance and Fintech",
         "description": "AI-native cross-border crypto and fiat payout routing API.",
-        "auth_methods": ["API Key", "Bearer Token"],
+        "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST",
         "api_breadth": "Moderate",
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 90,
         "evidence_url": "https://ipayx.ai/docs"
     },
     {
@@ -1310,11 +1394,12 @@ RAW_APPS_DATA = [
         "description": "Accounting software for small businesses by Intuit.",
         "auth_methods": ["OAuth2"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST (Intuit Data Services)",
+        "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires Intuit App Review for production key rollout",
+        "confidence_score": 94,
         "evidence_url": "https://developer.intuit.com/app/developer/qbo/docs/learn/rest-api-features"
     },
     {
@@ -1330,6 +1415,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://developer.xero.com/documentation/api/accounting/overview"
     },
     {
@@ -1345,6 +1431,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "Requires active Brex corporate account",
+        "confidence_score": 94,
         "evidence_url": "https://developer.brex.com/openapi/workspaces_api/"
     },
     {
@@ -1360,6 +1447,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "Requires Ramp business account credentials",
+        "confidence_score": 94,
         "evidence_url": "https://docs.ramp.com/developer/v1/overview"
     },
     {
@@ -1370,11 +1458,12 @@ RAW_APPS_DATA = [
         "description": "Capital markets data provider for venture capital, private equity, and M&A.",
         "auth_methods": ["API Key", "OAuth2"],
         "access_tier": "Partner Only / Contact Sales",
-        "api_surface": "REST (PitchBook Direct API)",
+        "api_surface": "REST",
         "api_breadth": "Comprehensive",
         "mcp_status": "No MCP / Blocked",
         "buildability_verdict": "Blocked by Auth/Gating",
-        "main_blocker": "Enterprise Sales Gated (High cost institutional subscription required)",
+        "main_blocker": "Enterprise Sales Gated ($25k+ contract required)",
+        "confidence_score": 88,
         "evidence_url": "https://pitchbook.com/products/data-integrations"
     },
 
@@ -1385,13 +1474,14 @@ RAW_APPS_DATA = [
         "website": "cloud.google.com/gemini",
         "category": "AI, Research and Media-native",
         "description": "AI-powered personalized research assistant & note synthesis tool by Google.",
-        "auth_methods": ["Google OAuth2 / GCP API Key"],
+        "auth_methods": ["Google OAuth2"],
         "access_tier": "Self-Serve Free",
-        "api_surface": "REST & SDK (Vertex AI / Gemini API)",
+        "api_surface": "REST & SDK (Vertex AI)",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 96,
         "evidence_url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview"
     },
     {
@@ -1400,13 +1490,14 @@ RAW_APPS_DATA = [
         "website": "help.otter.ai",
         "category": "AI, Research and Media-native",
         "description": "AI transcription and automated meeting notes summarizer.",
-        "auth_methods": ["Session Cookie / OAuth2"],
+        "auth_methods": ["Session Cookie"],
         "access_tier": "Self-Serve Paid",
-        "api_surface": "REST (Private/Partner API)",
+        "api_surface": "REST (Private/Partner)",
         "api_breadth": "Moderate",
         "mcp_status": "Community MCP",
         "buildability_verdict": "Buildable with Auth Setup",
-        "main_blocker": "No public REST API portal (Requires OAuth session tokens or unofficial MCP server)",
+        "main_blocker": "No public REST API portal (Session tokens required)",
+        "confidence_score": 86,
         "evidence_url": "https://help.otter.ai/hc/en-us/articles/360015638253-Otter-Integrations"
     },
     {
@@ -1414,7 +1505,7 @@ RAW_APPS_DATA = [
         "name": "Fathom",
         "website": "fathom.video",
         "category": "AI, Research and Media-native",
-        "description": "Free AI meeting recorder that records, transcribes, and summarizes Zoom/Teams calls.",
+        "description": "Free AI meeting recorder that records, transcribes, and summarizes Zoom calls.",
         "auth_methods": ["OAuth2", "API Key"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST (v1 API)",
@@ -1422,6 +1513,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://developers.fathom.video/"
     },
     {
@@ -1437,6 +1529,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Buildable with Auth Setup",
         "main_blocker": "Requires API developer access request form approval",
+        "confidence_score": 90,
         "evidence_url": "https://consensus.app/home/api-access/"
     },
     {
@@ -1444,7 +1537,7 @@ RAW_APPS_DATA = [
         "name": "Reducto",
         "website": "reducto.ai",
         "category": "AI, Research and Media-native",
-        "description": "API converting complex unstructured PDFs and documents into clean LLM-ready markdown.",
+        "description": "API converting complex unstructured PDFs into clean LLM-ready markdown.",
         "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Free",
         "api_surface": "REST",
@@ -1452,6 +1545,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.reducto.ai/"
     },
     {
@@ -1462,11 +1556,12 @@ RAW_APPS_DATA = [
         "description": "Autonomous AI software engineer by Cognition AI.",
         "auth_methods": ["API Key"],
         "access_tier": "Self-Serve Paid",
-        "api_surface": "REST & MCP Server Native",
+        "api_surface": "REST & MCP Native",
         "api_breadth": "Comprehensive",
         "mcp_status": "Official MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://docs.devin.ai/"
     },
     {
@@ -1482,6 +1577,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Tool-Callable (REST)",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 90,
         "evidence_url": "https://higgsfield.ai/"
     },
     {
@@ -1489,7 +1585,7 @@ RAW_APPS_DATA = [
         "name": "Mermaid CLI",
         "website": "github.com/mermaid-js/mermaid-cli",
         "category": "AI, Research and Media-native",
-        "description": "Command line interface for rendering Mermaid diagram syntax to PNG/SVG/PDF.",
+        "description": "CLI for rendering Mermaid diagram syntax to PNG/SVG/PDF.",
         "auth_methods": ["None"],
         "access_tier": "Self-Serve Free",
         "api_surface": "CLI / Node Package",
@@ -1497,6 +1593,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://github.com/mermaid-js/mermaid-cli"
     },
     {
@@ -1512,6 +1609,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Official & Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 98,
         "evidence_url": "https://transcriptapi.com/docs"
     },
     {
@@ -1527,6 +1625,7 @@ RAW_APPS_DATA = [
         "mcp_status": "Community MCP",
         "buildability_verdict": "Ready to Build",
         "main_blocker": "None / Ready",
+        "confidence_score": 94,
         "evidence_url": "https://grain.com/help/integrations-and-api"
     }
 ]
